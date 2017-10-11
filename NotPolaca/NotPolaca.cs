@@ -13,6 +13,7 @@ namespace NotPolaca
 
         public string ObtenerNotacion(string cadena)
         {
+
             for (int i = 0; i < cadena.Length; i++)
             {
                 if (cadena[i] != '+' && cadena[i] != '-' && cadena[i] != '*' && cadena[i] != '/' && cadena[i] != '(' && cadena[i] != ')')
