@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NotPolaca
+namespace NotacionPolaca.Lib
 {
     public class NotPolaca
     {
@@ -13,29 +13,53 @@ namespace NotPolaca
 
         public string ObtenerNotacion(string cadena)
         {
-
             for (int i = 0; i < cadena.Length; i++)
             {
                 if (cadena[i] != '+' && cadena[i] != '-' && cadena[i] != '*' && cadena[i] != '/' && cadena[i] != '(' && cadena[i] != ')')
                     salida.Enqueue(cadena[i]);
                 else if (pila.Count == 0 && (cadena[i] == '+' || cadena[i] == '-' || cadena[i] == '*' || cadena[i] == '/'))
                     pila.Push(cadena[i]);
-                else if ((pila.Peek() == '+' || pila.Peek() == '-') && (cadena[i] == '+' || cadena[i] == '-'))
+                else if (pila.Count > 0 && (pila.Peek() == '('))
+                    pila.Push(cadena[i]);
+                else if (pila.Count > 0 && ((pila.Peek() == '+' || pila.Peek() == '-') && (cadena[i] == '+' || cadena[i] == '-')))
                 {
                     salida.Enqueue(pila.Pop());
                     pila.Push(cadena[i]);
                 }
-                else if ((pila.Peek() == '*' || pila.Peek() == '/') && (cadena[i] == '*' || cadena[i] == '/'))
+                else if (pila.Count > 0 && ((pila.Peek() == '*' || pila.Peek() == '/') && (cadena[i] == '*' || cadena[i] == '/' || cadena[i] == '+' || cadena[i] == '-')))
                 {
                     salida.Enqueue(pila.Pop());
-                    pila.Push(cadena[i]);
+                    if(pila.Count > 0)
+                    {
+                        if ((pila.Peek() == '+' || pila.Peek() == '-') && (cadena[i] == '+' || cadena[i] == '-'))
+                        {
+                            salida.Enqueue(pila.Pop());
+                            pila.Push(cadena[i]);
+                        }
+                        else
+                        {
+                            pila.Push(cadena[i]);
+                        }
+                    }
+                    else
+                        pila.Push(cadena[i]);
+
                 }
+                else if (cadena[i] == '(')
+                    pila.Push(cadena[i]);
+                else if (cadena[i] == ')')
+                {
+                    while (pila.Peek() != '(')
+                        salida.Enqueue(pila.Pop());
+                    pila.Pop();
+                }    
                 else
                 {
                     pila.Push(cadena[i]);
                 }
             }
-            for (int i = 0; i < pila.Count; i++)
+            int cuenta = pila.Count;
+            for (int i = 0; i < cuenta; i++)
                 salida.Enqueue(pila.Pop());
 
             StringBuilder cadenaFinal = new StringBuilder();

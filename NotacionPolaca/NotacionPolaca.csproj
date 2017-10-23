@@ -49,9 +49,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\NotPolaca\NotPolaca.csproj">
+    <ProjectReference Include="..\NotPolaca\NotacionPolaca.Lib.csproj">
       <Project>{880b4632-f0b4-4f91-bb37-ba2da775d4d9}</Project>
-      <Name>NotPolaca</Name>
+      <Name>NotacionPolaca.Lib</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
